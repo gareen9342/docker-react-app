@@ -62,6 +62,56 @@ docker-compose.yml에 서비스를 매핑시키고, 컨테이너 이름을 작�
 
 해당 스크립트를 작성했다면, docker-compose up만 명령어를 입력해주면 해당 개발을 바로 진행할 수 있다. 
 
+## 도커 컨테이너 안에서 리액트 테스트 진행하기
+
+이미지 생성
+
+`docker build -f dockerfile.dev .`
+
+run app 
+
+`docker run -it <image name> npm run test`
+
+## nginx
+
+운영환경에서는 데브 서버가 필요하지 않다. 정적파일만을 제공해주기 위해 nginx를 사용해보자 (웹서버)
+
+개발서버를 왜 운영환경에서 사용하면 안되는 걸까?
+
+-> 개발에서 사용하는 서버는 소스를 ㄹ변경하면 자동으로 전체 앱을 다시 빌드해서 변경소스를 반영해주는 것과 같이 개발 환경에 특화된 기능들이 있기에 
+그러한 기능이 없는 nginx 서버보다 더욱 적합하지만
+
+운영 환경에서는 소스르 변경할 떄 다시 반영해줄 필요가 없으며 개발에 필요한 긴으들이 필요하지 않기에 더 깔끔하고 빠른 Nginx를 웺서버로 사용한다.
+
+## 운영환경의 도커 파일을 작성하기
+
+먼저 리액트 스크립트를 이용해서 빌드파일을 만들고, nginx를 이용해서 해당 정적 파일을 제공하는 개념이다. 
+
+운영환경을 위한 Dockerfile을 요약하자면 2가지 단계로 이루어져 있다.
+
+첫 번째 단계는 빌드 파일을 생성하는 **Builder stage**
+
+두 번째 단계는 Nginx를 가동하고 첫 번째 단계에서 생성된 빋르 폴더의 파일들을 웹브라우저의 요청에 따라 베공하는 **Run stage**
+
+nginx가 사용하는 단계의 스크립트를 보게되면,
+
+```yaml
+FROM nginx
+COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+```
+
+`--from=builder` : 다른 stage에 있는 파일을 복사할 때 다른 Stage 이름을 명시 
+
+`/usr/src/app/build` : builder stage 에서 생성된 파일들은 /usr/src/build 에 들어가게 되며 그곳에 저장된 파일들을 /usr/share/nginx/html로 복사를 시켜줘서 
+nginx 가 웹 브라우저의 http 요청이 올 때 마다 알맞은 파일을 전해줄 수 있게 만든다. 
 
 
+`/usr/share/nginx/html` : 이 장소에 파일을 넣어두면 Nginx가 알아서 Client에서 요청이 들어올 때 알맞은 정적파일을 제공해준다
+이 장소는 설정을 통해서 바꿀 수 있다.  
 
+
+실행은 
+
+`docker run -p 8080:80 c9d403c8994b`
+
+docker 는 기본적으로 80번 포트를 이용한다. 그에 따라 저런 식의 포트 매핑을 해 로컬에서 띄워볼 수 있도록 한다. 
