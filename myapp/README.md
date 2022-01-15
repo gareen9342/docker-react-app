@@ -32,4 +32,26 @@ node_modules 를 우선 삭제하고
 `docker run -it -p 3000:3000 <image name>`
 
 
+## volume 을 이용
+
+volume을 이용해 소스를 변경했을 때 다시 이미지를 빌드하지 않아도 변경한 소스 부분이 어플리케이션에 반영될 수 있도록 해보기
+
+### COPY와 Volume의 차이점 
+
+카피는, 로컬에 있는 소스코드를 도커 컨테이너에 복사를 해주는 개념
+
+Volume을 이용한다는 것은 도커 컨테이너에서 로컬에 있는 소스코드를 매핑을 해서 참조를 하는 개념
+
+### 실행하는 법
+
+`docker run -p 3000:3000 -v /usr/src/app/node_modules -v $(pwd):/usr/src/app <image id>`
+
+- `-v /usr/src/app/node_modules`
+: 호스트 디렉토리에 node_modules(현재 삭제 된 것 )은 없기에 컨테이너에 매핑하지 말라고 하는 것
+
+- `$(pwd):/usr/src/app`
+: pwd 경로에 있는 디렉토리 혹은 파일을 /usr/src/app 경로에서 참조 한다. 
+
+
+
 
