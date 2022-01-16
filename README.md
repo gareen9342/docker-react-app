@@ -141,3 +141,24 @@ after_success: 테스트 성공 후 할 일
 ```yaml
 
 ```
+
+## deploy
+
+>배포를 위한 스크립트 추가
+
+deploy : 배포용이라는 뜻
+
+provider: 외부 서비스 (s3, elastic beans talk, firebase 등등)
+
+region: AWS의 서비스가 위치하고 있는 물리적 장소
+
+app: 생성된 어플리케이션의 이름
+
+env: 환경이름 
+
+bucket_name: s3 버킷이름    
+: travis 에서 가지고 있는 파일을 압축해서 s3에 보내는 것...    
+이걸 먼저 하고, Elestic beanstalk에 보낼 수 있음
+
+우리가 elastic beanstalk 하나 생성을 하게 되면, 자동적으로 하나 버킷이 생성 
+
