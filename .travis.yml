@@ -10,7 +10,7 @@ before_install:
   - docker build -t kklily592/docker-react-app:test -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true kklily592/docker-react-app:test npm run test -- --coverage
+  - docker run -e CI=true kklily592/docker-react-app:test npm run start -- --coverage
 
 after_success:
   - echo "bulid success"
