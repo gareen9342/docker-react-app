@@ -1,0 +1,17 @@
+sudo: required
+
+language: generic
+
+services:
+  -docker
+
+before_install:
+  - echo "start creating an image with dockerfile"
+  - docker build -t kklily592/docker-react-app:test -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true kklily592/docker-react-app:test npm run test -- --coverage
+
+after_success:
+  - echo "bulid success"
+
