@@ -169,3 +169,10 @@ bucket_name: s3 버킷이름
 
 컨테이너를 삭제하더라도 데이터베이스는 남아있게 제작
 
+
+```
+client --->> nginx(URL에 맞추어 리소스를 제공) --->> frontend ( nginx( 정적파일 제공 ) -> buildfile )
+                                       --->> backend
+```
+
+
