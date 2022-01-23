@@ -158,7 +158,14 @@ env: 환경이름
 
 bucket_name: s3 버킷이름    
 : travis 에서 가지고 있는 파일을 압축해서 s3에 보내는 것...    
-이걸 먼저 하고, Elestic beanstalk에 보낼 수 있음
+이걸 먼저 하고, Elestic beanstalkㄷ에 보낼 수 있음
 
 우리가 elastic beanstalk 하나 생성을 하게 되면, 자동적으로 하나 버킷이 생성 
+
+## fullstack application 만들기
+
+리액트, 노드, 데이터베이스앱 개발   
+(멀티 컨테이너)
+
+컨테이너를 삭제하더라도 데이터베이스는 남아있게 제작
 
