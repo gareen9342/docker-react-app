@@ -41,7 +41,7 @@ app.post("/api/value", function(req, res, next) {
             if(err)
                 return res.status(500).send(err)
             else
-                return res.json(results)
+                return res.json({ success: true, value: req.body.value })
         })
 })
 
